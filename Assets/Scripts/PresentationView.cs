@@ -22,7 +22,4 @@ public class PresentationView : MonoBehaviour
     {
         startButton.gameObject.SetActive(state);
     }
-    
-    
-    
 }

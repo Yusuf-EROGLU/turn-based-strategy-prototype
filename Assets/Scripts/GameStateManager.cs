@@ -5,12 +5,11 @@ using UnityEngine;
 using UnityEngine.Events;
 
 
-
 public class GameStateManager : MonoBehaviour
 {
-
-   [HideInInspector] public YsfEvents<GameState> onStateChanged = new YsfEvents<GameState>();
-   
+    [HideInInspector] public YsfEvents<GameState> onStateChanged = new YsfEvents<GameState>();
+    
+    public static GameStateManager instance;
     public YsfEvents onPresentation = new YsfEvents();
     public YsfEvents onCommand = new YsfEvents();
     public YsfEvents onPlay = new YsfEvents();
@@ -23,6 +22,17 @@ public class GameStateManager : MonoBehaviour
 
     private void Awake()
     {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else if (instance != this)
+        {
+            Destroy(instance);
+            instance = this;
+        }
+
+
         ChangeState(GameState.LevelPresentation);
     }
 
@@ -60,8 +70,16 @@ public class GameStateManager : MonoBehaviour
 ///<summary>
 ///these classes for inspector handlers
 /// </summary>
-[Serializable]public class YsfEvents : UnityEvent {}
-[Serializable]public class YsfEvents<T> : UnityEvent<T> {}
+[Serializable]
+public class YsfEvents : UnityEvent
+{
+}
+
+[Serializable]
+public class YsfEvents<T> : UnityEvent<T>
+{
+}
+
 public enum GameState
 {
     LevelPresentation = 1,

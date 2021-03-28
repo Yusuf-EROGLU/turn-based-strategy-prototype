@@ -13,12 +13,10 @@ public class LevelView : MonoBehaviour
    {
       ActivateElements(false);
    }
-
-
+   
    public void Show()
    {
       ActivateElements();
-      
    }
 
    private void ActivateElements(bool state = true)
