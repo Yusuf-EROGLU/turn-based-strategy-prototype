@@ -18,8 +18,7 @@ public class GameStateManager : MonoBehaviour
     public YsfEvents onFailView = new YsfEvents();
 
     private GameState _currentState;
-
-
+    
     private void Awake()
     {
         if (instance == null)
