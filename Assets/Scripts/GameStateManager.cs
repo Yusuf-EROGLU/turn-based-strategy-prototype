@@ -7,35 +7,31 @@ using UnityEngine.Events;
 
 public class GameStateManager : MonoBehaviour
 {
-    [HideInInspector] public YsfEvents<GameState> onStateChanged = new YsfEvents<GameState>();
+    [HideInInspector] public UnityEvent<GameState> onStateChanged = new UnityEvent<GameState>();
     
-    public static GameStateManager instance;
-    public YsfEvents onPresentation = new YsfEvents();
-    public YsfEvents onCommand = new YsfEvents();
-    public YsfEvents onPlay = new YsfEvents();
-    public YsfEvents onCounterPlay = new YsfEvents();
-    public YsfEvents onSuccessView = new YsfEvents();
-    public YsfEvents onFailView = new YsfEvents();
+    public static GameStateManager Instance;
+    public UnityEvent onPresentation = new UnityEvent();
+    public UnityEvent onCommand = new UnityEvent();
+    public UnityEvent onPlay = new UnityEvent();
+    public UnityEvent onCounterPlay = new UnityEvent();
+    public UnityEvent onSuccessView = new UnityEvent();
+    public UnityEvent onFailView = new UnityEvent();
 
     private GameState _currentState;
-    
     private void Awake()
     {
-        if (instance == null)
+        if (Instance == null)
         {
-            instance = this;
+            Instance = this;
         }
-        else if (instance != this)
+        else if (Instance != this)
         {
-            Destroy(instance);
-            instance = this;
+            Destroy(Instance);
+            Instance = this;
         }
-
-
+        
         ChangeState(GameState.LevelPresentation);
     }
-
-
     private void ChangeState(GameState newState)
     {
         _currentState = newState;
@@ -69,15 +65,6 @@ public class GameStateManager : MonoBehaviour
 ///<summary>
 ///these classes for inspector handlers
 /// </summary>
-[Serializable]
-public class YsfEvents : UnityEvent
-{
-}
-
-[Serializable]
-public class YsfEvents<T> : UnityEvent<T>
-{
-}
 
 public enum GameState
 {

@@ -21,7 +21,6 @@ namespace TGS {
 		void Start () {
 			tgs = TerrainGridSystem.instance;
 			state = State.MOVESELECT;
-	
 		}
 	
 		// Update is called once per frame
@@ -52,7 +51,8 @@ namespace TGS {
 			case State.MOVESELECT:
 				if (Input.GetMouseButtonUp (0)) {                   //gets path when left mouse is released and over terrain
 					int t_cell = tgs.cellHighlightedIndex;
-					tgs.CellFadeOut (t_cell, Color.red, 50);
+					tgs.CellFadeOut (t_cell, Color.red, 50f);
+					
 					if (t_cell != -1) {                           //checks if we selected a cell
 						int startCell = tgs.CellGetIndex (tgs.CellGetAtPosition (transform.position, true));
 						float totalCost;
