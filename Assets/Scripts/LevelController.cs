@@ -11,29 +11,21 @@ public class LevelController : MonoBehaviour
     public UnityEvent onLevelSuccess;
     public UnityEvent onLevelFail;
     [HideInInspector] public List<EnemyCharacterController> _enemies;
-    
-    
     [SerializeField] private PlayerCharacterController playerCharacterController;
+    
     private TerrainGridSystem _terrainGridSystem;
+    private GameStateManager _gameStateManager;
     private int _selectedCellIndex;
     private int _lastClickedCell;
     private int _playerCurrentPosition;
 
     private void Awake()
     {
-        if (Instance == null)
-        {
-            Instance = this;
-        }
-        else if (Instance != this)
-        {
-            Destroy(Instance);
-            Instance = this;
-        }
+        _gameStateManager = FindObjectOfType<GameStateManager>();
         onLevelSuccess = new UnityEvent();
         //maybe this can be explicity on the inspector
-        onLevelSuccess.AddListener(GameStateManager.Instance.onSuccessView.Invoke);
-        onLevelFail.AddListener(GameStateManager.Instance.onFailView.Invoke);
+        onLevelSuccess.AddListener(_gameStateManager.onSuccessView.Invoke);
+        onLevelFail.AddListener(_gameStateManager.onFailView.Invoke);
         _terrainGridSystem = TerrainGridSystem.instance;
         _terrainGridSystem.OnCellClick += EvaluateCellClick;
     }
@@ -55,7 +47,6 @@ public class LevelController : MonoBehaviour
             onLevelSuccess.Invoke();
         }
     }
-    
     
     private void EvaluateCellClick(TerrainGridSystem sender, int cellIndex, int buttonIndex)
     {

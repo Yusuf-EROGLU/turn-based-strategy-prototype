@@ -14,7 +14,6 @@ public class CharacterControllerBase : MonoBehaviour
         _terrainGridSystem = TerrainGridSystem.instance;
         _animator = GetComponent<Animator>();
         _levelController = LevelController.Instance;
-        
     }
 
     protected void Move()

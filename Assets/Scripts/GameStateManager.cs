@@ -8,8 +8,7 @@ using UnityEngine.Events;
 public class GameStateManager : MonoBehaviour
 {
     [HideInInspector] public UnityEvent<GameState> onStateChanged = new UnityEvent<GameState>();
-    
-    public static GameStateManager Instance;
+
     public UnityEvent onPresentation = new UnityEvent();
     public UnityEvent onCommand = new UnityEvent();
     public UnityEvent onPlay = new UnityEvent();
@@ -18,25 +17,34 @@ public class GameStateManager : MonoBehaviour
     public UnityEvent onFailView = new UnityEvent();
 
     private GameState _currentState;
+    private static GameStateManager _instance;
+
+    public static GameStateManager Instance
+    {
+        get
+        {
+            if (_instance == null)
+            {
+                _instance = FindObjectOfType<GameStateManager>();
+                if (_instance == null)
+                {
+                    Debug.LogWarning("GameStateManager gameObject not found in the scene!");
+                }
+            }
+
+            return _instance;
+        }
+    }
+
     private void Awake()
     {
-        if (Instance == null)
-        {
-            Instance = this;
-        }
-        else if (Instance != this)
-        {
-            Destroy(Instance);
-            Instance = this;
-        }
-        
         ChangeState(GameState.LevelPresentation);
     }
-    private void ChangeState(GameState newState)
+
+    public void ChangeState(GameState newState)
     {
         _currentState = newState;
         onStateChanged.Invoke(newState);
-
         switch (newState)
         {
             case GameState.LevelPresentation:
@@ -60,11 +68,6 @@ public class GameStateManager : MonoBehaviour
         }
     }
 }
-
-
-///<summary>
-///these classes for inspector handlers
-/// </summary>
 
 public enum GameState
 {
