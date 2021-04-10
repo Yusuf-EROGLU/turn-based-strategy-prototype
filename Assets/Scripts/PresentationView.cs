@@ -16,7 +16,7 @@ public class PresentationView : MonoBehaviour
 
         startButton.onClick.AddListener(() =>
         {
-            _gameStateManager.ChangeState(GameState.Play);
+            _gameStateManager.ChangeState(GameState.Command);
             Hide();
         });
     }
