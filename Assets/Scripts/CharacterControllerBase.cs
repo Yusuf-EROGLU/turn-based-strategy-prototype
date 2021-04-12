@@ -7,13 +7,15 @@ using UnityEngine;
 public class CharacterControllerBase : MonoBehaviour
 {
     protected Animator _animator;
-    protected TerrainGridSystem _terrainGridSystem;
     protected LevelController _levelController;
-    protected void Awake()
+    protected ViewManager _viewManager;
+    protected LevelView _levelView;
+    
+    protected virtual void Awake()
     {
-        _terrainGridSystem = TerrainGridSystem.instance;
-        _animator = GetComponent<Animator>();
         _levelController = LevelController.Instance;
+        _viewManager = ViewManager.Instance;
+        _levelView = _viewManager.LevelView;
     }
 
     protected void Move()

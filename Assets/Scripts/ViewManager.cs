@@ -5,8 +5,23 @@ using UnityEngine;
 
 public class ViewManager : MonoBehaviour
 {
-   public static ViewManager Instance;
-   
+   private static ViewManager _instance;
+   public static ViewManager Instance
+   {
+      get
+      {
+         if (_instance == null)
+         {
+            _instance = FindObjectOfType<ViewManager>();
+            if (_instance == null)
+            {
+               Debug.LogWarning("ViewManager gameObject not found in the scene!");
+            }
+         }
+
+         return _instance;
+      }
+   }
    public PresentationView PresentationView => _presentationView;
    public LevelView LevelView => _levelView;
 
@@ -14,20 +29,9 @@ public class ViewManager : MonoBehaviour
    [SerializeField] private LevelView _levelView;
    private void Awake()
    {
-      Singleton();
+ 
    }
    
-   private void Singleton()
-   {
-      if (Instance == null)
-      {
-         Instance = this;
-      }
-      else if (Instance != this)
-      {
-         Destroy(Instance);
-         Instance = this;
-      }
-   }
+ 
    
 }
